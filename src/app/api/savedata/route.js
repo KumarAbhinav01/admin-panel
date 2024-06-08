@@ -30,12 +30,7 @@ export async function POST(request) {
       },
     });
 
-    // Disable caching by setting cache-control header to no-store
-    const responseHeaders = {
-      'Cache-Control': 'no-store',
-    };
-
-    return NextResponse.json({ message: 'Data added successfully', data: newData }, { status: 200, headers: responseHeaders });
+    return NextResponse.json({ message: 'Data added successfully', data: newData }, { status: 200, cache: 'no-store' });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
