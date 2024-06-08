@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
+export const fetchCache = 'force-no-store'; // Disable caching for this module
 
 export async function GET(request) {
   try {
@@ -19,7 +20,12 @@ export async function GET(request) {
 
     // Fetch data from the table
     const data = await prisma.allData.findMany();
-    return NextResponse.json({ data }, { status: 200, cache: 'no-store' });
+    const response = NextResponse.json({ data }, { status: 200 });
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });

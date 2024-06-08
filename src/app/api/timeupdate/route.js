@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
+export const fetchCache = 'force-no-store';
 
 export async function POST(request) {
   try {
@@ -22,11 +23,16 @@ export async function POST(request) {
     // Insert or update time
     await prisma.timeSprint.upsert({
       where: { id: 1 }, // Add the id field in the where clause
-      update: { time },
+      update: { time, updated_at: new Date() }, // Update the updated_at timestamp
       create: { userid: 1, time, status: 'updated' },
     });
 
-    return NextResponse.json({ message: 'Time Updated successfully' }, { status: 200 });
+    const response = NextResponse.json({ message: 'Time Updated successfully' }, { status: 200 });
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -37,18 +43,23 @@ export async function POST(request) {
 
 
 export async function GET(request) {
-    try {
-      // Fetch the time from the database
-      const timeSprint = await prisma.timeSprint.findUnique({ where: { id: 1 } });
-      if (!timeSprint) {
-        return NextResponse.json({ error: 'Time not found' }, { status: 404 });
-      }
-  
-      return NextResponse.json({ time: timeSprint.time }, { status: 200 });
-    } catch (error) {
-      console.error(error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    } finally {
-      await prisma.$disconnect();
+  try {
+    // Fetch the time from the database
+    const timeSprint = await prisma.timeSprint.findUnique({ where: { id: 1 } });
+    if (!timeSprint) {
+      return NextResponse.json({ error: 'Time not found' }, { status: 404 });
     }
+
+    const response = NextResponse.json({ time: timeSprint.time }, { status: 200 });
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  } finally {
+    await prisma.$disconnect();
   }
+}

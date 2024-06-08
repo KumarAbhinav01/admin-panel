@@ -15,7 +15,7 @@ export default function Orders() {
 
   const getAllData = () => {
     setLoading(true);
-    fetch('/api/getdata')
+    fetch('/api/getdata', { cache: 'no-store' })
       .then((res) => res.json())
       .then((data) => {
         setItems(data.data); // Update state with the correct data array
