@@ -1,11 +1,11 @@
 "use client"
-import React, { useEffect } from 'react';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation'
-import { Button, Typography } from '@mui/material';
-import Login from '@/components/Login';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Login from "@/components/Login";
+import Cookies from "js-cookie";
 
-const Home = () => {
+export default function Home() {
+
   const router = useRouter();  
   useEffect(() => {
     const isLoggedIn = Cookies.get('loggedIn');
@@ -17,8 +17,6 @@ const Home = () => {
   }, [router]);
 
   return (
-    <Login />
+      <Login/>
   );
-};
-
-export default Home;
+}
