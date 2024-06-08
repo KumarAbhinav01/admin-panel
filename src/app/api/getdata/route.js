@@ -19,7 +19,13 @@ export async function GET(request) {
 
     // Fetch data from the table
     const data = await prisma.allData.findMany();
-    return NextResponse.json({ data }, { status: 200 });
+
+    // Disable caching by setting cache-control header to no-store
+    const responseHeaders = {
+      'Cache-Control': 'no-store',
+    };
+
+    return NextResponse.json({ data }, { status: 200, headers: responseHeaders });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
