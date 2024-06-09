@@ -1,34 +1,39 @@
-import * as React from 'react';
-import Link from '@mui/material/Link';
+import React from 'react';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
+import { MetroSpinner } from 'react-spinners-kit';
+import { Button, Box } from '@mui/material';
+import Link from 'next/link';
 
-import UpdateTime from './modal/updatetime';
-
-
-
-
-export default function Deposits() {
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+export default function Deposits({ loading, count, orders }) {
   return (
-    <React.Fragment>
-      <Title>Time Sprint</Title>
-      <Typography component="p" variant="h4">
-        00:00 PM
-      </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
-        Updated By Chinmay
-      </Typography>
-      <div>
-        <Link color="primary" href="#" onClick={handleOpen}>
-          Update Time
-        </Link>
-      </div>
-      <UpdateTime open={open} handleClose={handleClose}/>
-    </React.Fragment>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: '100%',
+        padding: '16px',
+      }}
+    >
+      <Title>Total Bottles Collected</Title>
+      {loading ? (
+        <div style={{ textAlign: 'center' }}>
+          <MetroSpinner size={30} color="#1976d2" loading={loading} />
+        </div>
+      ) : (
+        <React.Fragment>
+          <Typography component="p" variant="h4" sx={{ marginBottom: '16px' }}>
+            {count}
+          </Typography>
+          <Button variant="contained" sx={{ alignSelf: 'flex-end', width: '100%' }}>
+            <Link href="/dashboard/integration">
+            Update Time
+            </Link>
+          </Button>
+        </React.Fragment>
+      )}
+    </Box>
   );
 }

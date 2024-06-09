@@ -1,5 +1,5 @@
+"use client"
 import React from 'react'
-
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -10,6 +10,9 @@ import Orders from '@/components/Orders';
 import { Box, Toolbar } from '@mui/material';
 
 const MainPage = (props) => {
+    const [orders, setOrders] = React.useState([{}]);
+    const [count, setCount] = React.useState(0);
+    const [loading, setLoading] = React.useState(false);
    
     return (
         <Box
@@ -37,7 +40,7 @@ const MainPage = (props) => {
                                 height: 240,
                             }}
                         >
-                            <Chart />
+                            <Chart loading={loading} count={count} orders={orders}/>
                         </Paper>
                     </Grid>
                     {/* Recent Deposits */}
@@ -50,13 +53,13 @@ const MainPage = (props) => {
                                 height: 240,
                             }}
                         >
-                            <Deposits />
+                            <Deposits loading={loading} count={count} orders={orders}/>
                         </Paper>
                     </Grid>
                     {/* Recent Orders */}
                     <Grid item xs={12}>
                         <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                            <Orders />
+                            <Orders loading={loading} setLoading={setLoading} setCount={setCount} setOrders={setOrders}/>
                         </Paper>
                     </Grid>
                 </Grid>

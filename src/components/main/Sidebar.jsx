@@ -3,7 +3,7 @@ import List from '@mui/material/List';
 import { Drawer, IconButton, Toolbar } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Divider from '@mui/material/Divider';
-import { mainListItems, secondaryListItems } from '@/components/ListItem';
+import { mainListItems } from '@/components/ListItem';
 
 const Sidebar = (props) => {
     const {toggleDrawer,open}=props
@@ -17,15 +17,13 @@ const Sidebar = (props) => {
                     px: [1],
                 }}
             >
-                <IconButton onClick={toggleDrawer}>
-                    <ChevronLeftIcon />
+                <IconButton onClick={toggleDrawer} color='white'>
+                    <ChevronLeftIcon sx={{color: 'white'}}/>
                 </IconButton>
             </Toolbar>
             <Divider />
             <List component="nav">
                 {mainListItems}
-                <Divider sx={{ my: 1 }} />
-                {secondaryListItems}
             </List>
         </Drawer>
     )

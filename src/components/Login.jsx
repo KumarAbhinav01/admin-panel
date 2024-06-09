@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,12 +8,51 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { theme } from '@/utils/theme';
 import Cookies from 'js-cookie';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/system';
+import Loading from '@/app/dashboard/loading';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+    text: {
+      primary: '#fff', // Set the primary text color to white
+    },
+  },
+});
+
+const BackgroundBox = styled(Box)(({ theme }) => ({
+  backgroundImage: 'url(bg.avif)',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  height: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}));
+
+const LoginPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(4),
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '100%',
+  maxWidth: 400,
+  backgroundColor: 'rgba(255, 255, 255, 0.1)', // Transparent white background
+  backdropFilter: 'blur(10px)', // Blur effect
+  border: '1px solid rgba(255, 255, 255, 0.3)', // Border to enhance glass effect
+  color: '#fff', // Set text color to white
+}));
 
 export default function Login() {
   const router = useRouter();
@@ -26,8 +65,8 @@ export default function Login() {
   const login = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('/api/signin', user);
-      
+      const response = await axios.post('https://admin-panel-server-my80.onrender.com/api/signin', user);
+
       if (response.status === 200) {
         Cookies.set('loggedIn', true);
         toast.success('Login Successful');
@@ -41,7 +80,7 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -51,21 +90,14 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+      <CssBaseline />
+      <BackgroundBox>
+        <LoginPaper elevation={6}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" sx={{ color: 'primary.main' }}>
-            Sign in
+          <Typography component="h1" variant="h5" sx={{ color: '#fff' }}>
+            Login
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
@@ -73,11 +105,28 @@ export default function Login() {
               required
               fullWidth
               id="username"
-              label="Username"
+              label="Email"
               name="username"
               autoComplete="username"
               autoFocus
               onChange={handleChange}
+              InputLabelProps={{ style: { color: '#fff' } }} // Set input label color to white
+              InputProps={{
+                style: { color: '#fff' }, // Set input text color to white
+                sx: {
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: '#fff', // Set border color to white
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#fff', // Set border color to white on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#fff', // Set border color to white when focused
+                    },
+                  },
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -89,20 +138,46 @@ export default function Login() {
               id="password"
               autoComplete="current-password"
               onChange={handleChange}
+              InputLabelProps={{ style: { color: '#fff' } }} // Set input label color to white
+              InputProps={{
+                style: { color: '#fff' }, // Set input text color to white
+                sx: {
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: '#fff', // Set border color to white
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#fff', // Set border color to white on hover
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#fff', // Set border color to white when focused
+                    },
+                  },
+                },
+              }}
             />
             <Button
               type="button"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                color: '#fff', // Set button text color to white
+              }}
               onClick={login}
               disabled={!isFormValid || loading}
             >
-              Sign In
+              <Typography color={isFormValid || loading ?'#fff' : 'grey' }>
+              Sign Up
+              </Typography>
             </Button>
+            <Typography variant="body2" align="center" sx={{ mt: 2, color: '#fff' }}>
+              Already have an account? <a href="/login" style={{ color: '#fff', textDecoration: 'underline' }}>Log in here</a>
+            </Typography>
           </Box>
-        </Box>
-      </Container>
+        </LoginPaper>
+      </BackgroundBox>
     </ThemeProvider>
   );
 }
