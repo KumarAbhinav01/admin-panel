@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow, TablePagination } from '@mui/material';
 import Title from './Title';
-import { MetroSpinner } from 'react-spinners-kit';
+import Skeleton from '@mui/material/Skeleton';
 import moment from 'moment';
 
 export default function Orders({ loading, setLoading, setCount, setOrders }) {
@@ -19,7 +19,7 @@ export default function Orders({ loading, setLoading, setCount, setOrders }) {
     fetch('https://admin-panel-server-my80.onrender.com/api/getdata', { cache: 'no-store' })
       .then((res) => res.json())
       .then((data) => {
-        setItems(data.data);
+        setItems(data.data.reverse());
         const totalCount = data.data.reduce((acc, item) => acc + parseInt(item.count, 10), 0);
         setCount(totalCount);
         setOrders(data.data);
@@ -54,26 +54,27 @@ export default function Orders({ loading, setLoading, setCount, setOrders }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {loading ? (
-            <TableRow>
-              <TableCell colSpan={5} align="center">
-                <MetroSpinner size={30} color="#1976d2" loading={loading} />
-              </TableCell>
-            </TableRow>
-          ) : (
-            items
+          {(loading ? Array.from(new Array(rowsPerPage)) : items
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .reverse()
-              .map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>{row.id}</TableCell>
-                  <TableCell>{moment(row.createdAt).format('YYYY-MM-DD')}</TableCell>
-                  <TableCell>{row.time}</TableCell>
-                  <TableCell>{row.size}</TableCell>
-                  <TableCell>{row.count}</TableCell>
-                </TableRow>
-              ))
-          )}
+            ).map((row, index) => (
+              <TableRow key={index}>
+                <TableCell>
+                  {row ? row.id : <Skeleton />}
+                </TableCell>
+                <TableCell>
+                  {row ? moment(row.createdAt).format('YYYY-MM-DD') : <Skeleton />}
+                </TableCell>
+                <TableCell>
+                  {row ? row.time : <Skeleton />}
+                </TableCell>
+                <TableCell>
+                  {row ? row.size : <Skeleton />}
+                </TableCell>
+                <TableCell>
+                  {row ? row.count : <Skeleton />}
+                </TableCell>
+              </TableRow>
+          ))}
         </TableBody>
       </Table>
       <TablePagination

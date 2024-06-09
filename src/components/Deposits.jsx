@@ -27,11 +27,11 @@ export default function Deposits({ loading, count, orders }) {
           <Typography component="p" variant="h4" sx={{ marginBottom: '16px' }}>
             {count}
           </Typography>
+          <Link href="/dashboard/integration">
           <Button variant="contained" sx={{ alignSelf: 'flex-end', width: '100%' }}>
-            <Link href="/dashboard/integration">
             Update Time
-            </Link>
           </Button>
+          </Link>
         </React.Fragment>
       )}
     </Box>

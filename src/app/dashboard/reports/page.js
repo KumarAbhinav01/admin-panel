@@ -44,7 +44,7 @@ const ReportsPage = () => {
     axios
       .get("https://admin-panel-server-my80.onrender.com/api/getdata")
       .then((response) => {
-        setData(response.data.data);
+        setData(response.data.data.reverse());
         setLoading(false);
       })
       .catch((error) => {
@@ -134,7 +134,7 @@ const ReportsPage = () => {
 
       <Grid container spacing={2} sx={{ marginBottom: "20px" }}>
         <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ height: "100%" }}>
+          <Card sx={{ height: "100%", bgcolor: "#010835", color: 'white' }}>
             <CardContent
               sx={{
                 height: "100%",
@@ -143,16 +143,16 @@ const ReportsPage = () => {
                 justifyContent: "center",
               }}
             >
-              <Typography variant="h6">Total Bottles Collected</Typography>
-              <Typography variant="h6">(Last Hour)</Typography>
-              <Typography variant="body2">
+              <Typography variant="h4">
                 {loading ? <Skeleton width={100} /> : calculateSummary("hour")}
               </Typography>
+              <Typography variant="body1">Total Bottles Collected</Typography>
+              <Typography variant="body1">(Last Hour)</Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ height: "100%" }}>
+          <Card sx={{ height: "100%", bgcolor: "#010835", color: 'white' }}>
             <CardContent
               sx={{
                 height: "100%",
@@ -161,16 +161,16 @@ const ReportsPage = () => {
                 justifyContent: "center",
               }}
             >
-              <Typography variant="h6">Total Bottles Collected</Typography>
-              <Typography variant="h6">(Today)</Typography>
-              <Typography variant="body2">
+              <Typography variant="h4">
                 {loading ? <Skeleton width={100} /> : calculateSummary("day")}
               </Typography>
+              <Typography variant="body1">Total Bottles Collected</Typography>
+              <Typography variant="body1">(Today)</Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ height: "100%" }}>
+          <Card sx={{ height: "100%", bgcolor: "#010835", color: 'white' }}>
             <CardContent
               sx={{
                 height: "100%",
@@ -179,16 +179,16 @@ const ReportsPage = () => {
                 justifyContent: "center",
               }}
             >
-              <Typography variant="h6">Total Bottles Collected</Typography>
-              <Typography variant="h6">(This Week)</Typography>
-              <Typography variant="body2">
+              <Typography variant="h4">
                 {loading ? <Skeleton width={100} /> : calculateSummary("week")}
               </Typography>
+              <Typography variant="body1">Total Bottles Collected</Typography>
+              <Typography variant="body1">(This Week)</Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ height: "100%" }}>
+          <Card sx={{ height: "100%", bgcolor: "#010835", color: 'white' }}>
             <CardContent
               sx={{
                 height: "100%",
@@ -197,11 +197,11 @@ const ReportsPage = () => {
                 justifyContent: "center",
               }}
             >
-              <Typography variant="h6">Total Bottles Collected</Typography>
-              <Typography variant="h6">(This Month)</Typography>
-              <Typography variant="body2">
+              <Typography variant="h4">
                 {loading ? <Skeleton width={100} /> : calculateSummary("month")}
               </Typography>
+              <Typography variant="body1">Total Bottles Collected</Typography>
+              <Typography variant="body1">(This Month)</Typography>
             </CardContent>
           </Card>
         </Grid>
