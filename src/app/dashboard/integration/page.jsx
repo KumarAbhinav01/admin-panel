@@ -7,6 +7,7 @@ const Page = () => {
   const [time, setTime] = useState('');
   const [currentTime, setCurrentTime] = useState('');
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     axios.get('https://admin-panel-server-my80.onrender.com/api/time')
@@ -25,15 +26,19 @@ const Page = () => {
   };
 
   const handleTimeUpdate = () => {
+    setUpdating(true);
     axios.post('https://admin-panel-server-my80.onrender.com/api/timeupdate', {
       time: time
     })
     .then(response => {
       console.log('Time updated successfully:', response.data);
       setCurrentTime(time);
+      setTime('');
+      setUpdating(false);
     })
     .catch(error => {
       console.error('Error updating time:', error);
+      setUpdating(false);
     });
   };
 
@@ -83,9 +88,15 @@ const Page = () => {
             value={time}
             onChange={handleTimeChange}
             sx={{ marginBottom: '20px' }}
+            disabled={updating}
           />
-          <Button variant="contained" onClick={handleTimeUpdate} fullWidth>
-            Update Time
+          <Button
+            variant="contained"
+            onClick={handleTimeUpdate}
+            fullWidth
+            disabled={updating}
+          >
+            {updating ? 'Updating...' : 'Update Time'}
           </Button>
         </Box>
       </Box>

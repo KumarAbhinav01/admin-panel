@@ -163,18 +163,16 @@ export default function Login() {
               sx={{
                 mt: 3,
                 mb: 2,
-                color: '#fff', // Set button text color to white
+                color: '#fff',
+                bgcolor: '#DC014E'
               }}
               onClick={login}
               disabled={!isFormValid || loading}
             >
               <Typography color={isFormValid || loading ?'#fff' : 'grey' }>
-              Sign Up
+              Sign In
               </Typography>
             </Button>
-            <Typography variant="body2" align="center" sx={{ mt: 2, color: '#fff' }}>
-              Already have an account? <a href="/login" style={{ color: '#fff', textDecoration: 'underline' }}>Log in here</a>
-            </Typography>
           </Box>
         </LoginPaper>
       </BackgroundBox>
