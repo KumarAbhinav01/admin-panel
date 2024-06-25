@@ -42,7 +42,7 @@ const ReportsPage = () => {
 
   useEffect(() => {
     axios
-      .get("https://admin-panel-server-my80.onrender.com/api/getdata")
+      .get("http://adminpanel.abhi6722.in/api/getdata")
       .then((response) => {
         setData(response.data.data.reverse());
         setLoading(false);

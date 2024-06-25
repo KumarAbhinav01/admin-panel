@@ -28,7 +28,7 @@ export default function Signup() {
     const signup = async () => {
         try {
             setLoading(true);
-            const result = await axios.post("https://admin-panel-server-my80.onrender.com/api/signup", user);
+            const result = await axios.post("http://adminpanel.abhi6722.in/api/signup", user);
             toast.success("Signup Successful");
             router.push('/login', { scroll: false });
         } catch (error) {
