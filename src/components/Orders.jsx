@@ -16,7 +16,7 @@ export default function Orders({ loading, setLoading, setCount, setOrders }) {
 
   const getAllData = () => {
     setLoading(true);
-    fetch('http://adminpanel.abhi6722.in/api/getdata', { cache: 'no-store' })
+    fetch('https://adminpanel.abhi6722.in/api/getdata', { cache: 'no-store' })
       .then((res) => res.json())
       .then((data) => {
         setItems(data.data.reverse());

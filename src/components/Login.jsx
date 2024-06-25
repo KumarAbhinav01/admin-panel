@@ -65,7 +65,7 @@ export default function Login() {
   const login = async () => {
     try {
       setLoading(true);
-      const response = await axios.post('http://adminpanel.abhi6722.in/api/signin', user);
+      const response = await axios.post('https://adminpanel.abhi6722.in/api/signin', user);
 
       if (response.status === 200) {
         Cookies.set('loggedIn', true);

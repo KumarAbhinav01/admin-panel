@@ -10,7 +10,7 @@ const Page = () => {
   const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
-    axios.get('http://adminpanel.abhi6722.in/api/time')
+    axios.get('https://adminpanel.abhi6722.in/api/time')
       .then(response => {
         setCurrentTime(response.data.time);
         setLoading(false);
@@ -27,7 +27,7 @@ const Page = () => {
 
   const handleTimeUpdate = () => {
     setUpdating(true);
-    axios.post('http://adminpanel.abhi6722.in/api/timeupdate', {
+    axios.post('https://adminpanel.abhi6722.in/api/timeupdate', {
       time: time
     })
     .then(response => {
